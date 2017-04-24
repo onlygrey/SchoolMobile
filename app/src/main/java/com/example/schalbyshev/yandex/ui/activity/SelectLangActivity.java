@@ -29,41 +29,31 @@ public class SelectLangActivity extends AppCompatActivity {
     private Lang localLang;
     private Lang currentLang;
     public final String LOG_TAG = this.getClass().getSimpleName()+" !TAG! ";
-
     private RecyclerView rvLang;
 
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_lang_activity);
-        Log.d(LOG_TAG, "onCreate");
-
+        //Log.d(LOG_TAG, "onCreate");
+        //получаем локальный и используемый языки
         Intent intent = getIntent();
         localLang=new Lang(intent.getStringExtra("localLangKey"),intent.getStringExtra("localLangValue"));
         currentLang=new Lang(intent.getStringExtra("currentLangKey"),intent.getStringExtra("currentLangValue"));
-        Log.d(LOG_TAG, "localLang key = "+localLang.getKey()+" value = "+localLang.getValue());
-        Log.d(LOG_TAG, "currentLang key = "+currentLang.getKey()+" value = "+currentLang.getValue());
+        //Log.d(LOG_TAG, "localLang key = "+localLang.getKey()+" value = "+localLang.getValue());
+        //Log.d(LOG_TAG, "currentLang key = "+currentLang.getKey()+" value = "+currentLang.getValue());
 
         ArrayList<Lang> langArrayList=getLang();
         Collections.sort(langArrayList);
 
         if (langArrayList!=null){
-            Log.d(LOG_TAG, "langArrayList != null");
-            initRecyclerViewAdapter(langArrayList);
-            /*for (Lang l: langArrayList ) {
-                Log.d(LOG_TAG, "lang key = "+l.getKey()+" value = "+l.getValue());
-
-            }*/
-        }
-        else {
-            //textView = new TextView(this);
-            //textView.setText(R.string.voidHistory);
-            //llTab1Favorites.addView(textView);
+            //Log.d(LOG_TAG, "langArrayList != null");
+            initRecyclerViewAdapter(langArrayList); //инициируем добавление списка языков в активность
         }
     }
 
     private ArrayList<Lang> getLang(){
-        try {
+        try {   //читаем из файла
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
                     openFileInput("lang_"+localLang.getKey()+".xml")));
             String bufferXML="" ;
@@ -77,9 +67,6 @@ public class SelectLangActivity extends AppCompatActivity {
             return langXMLParser.getAllLangs();
         } catch (FileNotFoundException e) {
             Log.d(LOG_TAG, "bufferedReader exception "+e.getMessage());
-            //bundle.putString("ui","ui="+localLang.getKey()+"&");
-            //loadLang();
-            //e.printStackTrace();
             return null;
         }catch (IOException ioException){
             Log.d(LOG_TAG, "bufferedReader exception "+ioException.getMessage());

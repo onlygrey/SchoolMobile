@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.schalbyshev.yandex.core.HistoryItem;
 
@@ -18,11 +17,11 @@ import java.util.Date;
  */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public final String TAG = this.getClass().getSimpleName()+" !TAG! ";
+
+    private final String LOG_TAG = this.getClass().getSimpleName()+" !TAG! ";
     private static final int DATABASE_VERSION=1;
     private static final String DATABASE="DB_HISTORY";
     private static final String TABLE="HISTORY";
-
     private static final String KEY_ID="id";
     private static final String KEY_TEXT="text";
     private static final String KEY_TRANSLATE="translate";
@@ -30,7 +29,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_T_LANG="target_lang";
     private static final String KEY_FAVORITES="favorites";
     private static final String KEY_DATE="fav_insert_date";
-
 
     public DatabaseHelper(Context context ) {
         super(context, DATABASE, null, 1);
@@ -93,7 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "AND ( "+KEY_S_LANG+" = '"+bundle.getString(KEY_S_LANG)+"' ) " +
                 "AND ( "+KEY_T_LANG+" = '"+bundle.getString(KEY_T_LANG)+"' );";
         Cursor cursor =db.rawQuery(selectQuery,null);
-        Log.d(TAG, "selectQuery "+selectQuery);
+        //Log.d(LOG_TAG, "selectQuery "+selectQuery);
 
         if (cursor.moveToFirst()){
             cursor.close();
@@ -107,19 +105,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void updateHistory(Bundle bundle){
         SQLiteDatabase db= this.getWritableDatabase();
 
-        String updateQuery="UPDATE "+TABLE+" SET "+KEY_FAVORITES+" = "+bundle.getInt(KEY_FAVORITES)+
-                " WHERE ( "+KEY_TEXT+" = '"+bundle.getString(KEY_TEXT)+"' ) " +
+        String updateQuery="( "+KEY_TEXT+" = '"+bundle.getString(KEY_TEXT)+"' ) " +
                 "AND ( "+KEY_TRANSLATE+" = '"+bundle.getString(KEY_TRANSLATE)+"' ) " +
                 "AND ( "+KEY_S_LANG+" = '"+bundle.getString(KEY_S_LANG)+"' ) " +
-                "AND ( "+KEY_T_LANG+" = '"+bundle.getString(KEY_T_LANG)+"' );";
-        db.rawQuery(updateQuery,null);
-        Log.d(TAG, "updateHistory "+updateQuery);
+                "AND ( "+KEY_T_LANG+" = '"+bundle.getString(KEY_T_LANG)+"' )";
+
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_FAVORITES,bundle.getInt(KEY_FAVORITES));
+        db.update(TABLE,cv,updateQuery,null);
+        //Log.d(LOG_TAG, "updateHistory "+updateQuery);
     }
 
     public ArrayList<HistoryItem> getAllFavorites() {
         ArrayList<HistoryItem> allFavorites=new ArrayList<>();
         String selectQuery = "SELECT * FROM "+TABLE+" WHERE "+KEY_FAVORITES+" = 1 ;";
-        Log.d(TAG, "selectQuery "+selectQuery);
+        //Log.d(LOG_TAG, "getAllFavorites selectQuery "+selectQuery);
 
         SQLiteDatabase db= this.getWritableDatabase();
 
@@ -134,6 +134,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 historyItem.setTargetLang(cursor.getString(4));
                 historyItem.setFavorites(cursor.getInt(5));
                 allFavorites.add(historyItem);
+                //Log.d(LOG_TAG, "cursor.getInt(5) "+cursor.getInt(5));
+
             }while (cursor.moveToNext());
         }
         cursor.close();
@@ -142,7 +144,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteHistory() {
         String deleteQuery = "DELETE FROM "+TABLE+";";
-        Log.d(TAG, "deleteQuery "+deleteQuery);
+        //Log.d(LOG_TAG, "deleteQuery "+deleteQuery);
         SQLiteDatabase db= this.getWritableDatabase();
         db.execSQL(deleteQuery);
     }

@@ -5,6 +5,7 @@ package com.example.schalbyshev.yandex.core;
  */
 
 public class Lang implements Comparable<Lang>{
+
     private String key;
     private String value;
 

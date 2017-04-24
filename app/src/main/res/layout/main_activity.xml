@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
@@ -18,8 +18,9 @@
         android:verticalScrollbarPosition="left"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText"
-        app:layout_constraintRight_toLeftOf="@+id/ibMakeFavorite"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="64dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <EditText
         android:id="@+id/editText"
@@ -89,7 +90,7 @@
         android:layout_marginRight="8dp"
         android:background="@null"
         android:onClick="onClick"
-        android:src="@android:drawable/ic_menu_delete"
+        android:src="@drawable/ic_menu_close_clear_cancel"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/editText"
         app:layout_constraintRight_toRightOf="@+id/editText"
@@ -97,16 +98,18 @@
 
     <ImageButton
         android:id="@+id/ibMakeFavorite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
+        android:background="@null"
         android:onClick="onClick"
-        android:src="@android:drawable/star_big_off"
+        android:src="@drawable/btn_star_big_off"
         android:visibility="invisible"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:srcCompat="@drawable/btn_star_big_off" />
 
     <ImageButton
         android:id="@+id/ibTranslate"
@@ -116,10 +119,11 @@
         android:layout_marginEnd="64dp"
         android:layout_marginRight="64dp"
         android:layout_weight="1"
-        android:background="@null"
+        android:background="@drawable/fon"
+        android:src="@drawable/ic_menu_sort_alphabetically"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/ibFavorites"
-        app:srcCompat="@android:drawable/ic_menu_sort_alphabetically" />
+        app:srcCompat="@drawable/ic_menu_sort_alphabetically" />
 
     <ImageButton
         android:id="@+id/ibFavorites"
@@ -132,25 +136,11 @@
         android:layout_marginStart="24dp"
         android:layout_weight="1"
         android:background="@null"
-        android:elevation="0dp"
         android:onClick="onClick"
+        android:src="@android:drawable/btn_star"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@android:drawable/btn_star" />
-
-    <ImageButton
-        android:id="@+id/ibSettings"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="64dp"
-        android:layout_marginStart="64dp"
-        android:layout_weight="1"
-        android:background="@null"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/ibFavorites"
-        app:srcCompat="@android:drawable/ic_menu_preferences" />
+        app:srcCompat="@drawable/btn_star_big_off" />
 
 </android.support.constraint.ConstraintLayout>

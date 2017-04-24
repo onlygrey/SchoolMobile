@@ -2,8 +2,6 @@ package com.example.schalbyshev.yandex.core;
 
 import android.text.TextUtils;
 
-import com.example.schalbyshev.yandex.core.Lang;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -18,10 +16,10 @@ import java.util.ArrayList;
 
 public class LangXMLParser {
 
-    public final String LOG_TAG = this.getClass().getSimpleName()+" !TAG! ";
+    private final String LOG_TAG = this.getClass().getSimpleName()+" !TAG! ";
+    private String textTranslate;
+    private ArrayList<Lang> langArrayList;
 
-    public String textTranslate;
-    public ArrayList<Lang> langArrayList;
     public LangXMLParser(String stringXML){
         String tmp = "";
         String stringKey = "";
@@ -30,9 +28,7 @@ public class LangXMLParser {
         langArrayList=new ArrayList<>();
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-            //factory.setNamespaceAware(true);
             XmlPullParser xpp = factory.newPullParser();
-            // даем парсеру на вход Reader
             xpp.setInput(new StringReader(stringXML));
 
             while (xpp.getEventType() != XmlPullParser.END_DOCUMENT) {
@@ -47,7 +43,6 @@ public class LangXMLParser {
                                 + ", depth = " + xpp.getDepth() + ", attrCount = "
                                 + xpp.getAttributeCount());*/
                         tmp = "";
-
                         for (int i = 0; i < xpp.getAttributeCount(); i++) {
                             tmp = tmp + xpp.getAttributeName(i) + " = "
                                     + xpp.getAttributeValue(i) + ", ";
@@ -78,7 +73,6 @@ public class LangXMLParser {
                 xpp.next();
             }
             //Log.d(LOG_TAG, "END_DOCUMENT");
-
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -4,7 +4,6 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.net.SSLCertificateSocketFactory;
 import android.os.Bundle;
-import android.util.Log;
 
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 
@@ -28,7 +27,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class AsyncTaskLoaderText extends AsyncTaskLoader<String> {
 
-    public final String TAG = this.getClass().getSimpleName()+" !TAG! ";
+    public final String LOG_TAG = this.getClass().getSimpleName()+" !TAG! ";
     public final String KEY_API = "key=trnsl.1.1.20170406T182029Z.b5198dbe36626fed.355cf8fbc66bd157e808942cf160746f55f9ad0e";
     public final String URL_TRANSLATE="https://translate.yandex.net/api/v1.5/tr/translate?";
     public final String URL_LANGS="https://translate.yandex.net/api/v1.5/tr/getLangs?";
@@ -53,19 +52,17 @@ public class AsyncTaskLoaderText extends AsyncTaskLoader<String> {
                 e.printStackTrace();
             }
         }
-        Log.d(TAG, "Constructor "+fullText);
+        //Log.d(LOG_TAG, "Constructor "+fullText);
     }
     @Override
     public String loadInBackground() {
-        Log.d(TAG, "loadInBackground");
-        //n++;
+        //Log.d(LOG_TAG, "loadInBackground");
         String textTranslate;
         try {
             textTranslate=getXML(translateURL,fullText);
             if (simpleText!=null){
                 textTranslate=textTranslate+"<SourceText text=\""+simpleText+"\"></SourceText>";
             }
-            //textTranslate=translateXMLParser.getTextTranslate();
         }catch (Exception e){
             textTranslate="Error "+e.getMessage();
         }
@@ -75,24 +72,18 @@ public class AsyncTaskLoaderText extends AsyncTaskLoader<String> {
 
     private String getXML(String path, String stringTranslate) throws IOException {
         BufferedReader reader=null;
-        //String lang="en-ru";
-        //String input="home";
         try {
+            //у меня была прокси ssl поэтому пришлось сделать так
             URL url=new URL(path);
-            //HttpsURLConnection httpsURLConnection=(HttpsURLConnection)url.openConnection();
-
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            //if (httpURLConnection instanceof HttpsURLConnection) {
                 HttpsURLConnection httpsURLConnection = (HttpsURLConnection) httpURLConnection;
                 httpsURLConnection.setSSLSocketFactory(SSLCertificateSocketFactory.getInsecure(0, null));
                 httpsURLConnection.setHostnameVerifier(new AllowAllHostnameVerifier());
-            //}
 
             httpsURLConnection.setRequestMethod("POST");
-            //httpsURLConnection.setReadTimeout(10000);
             httpsURLConnection.setDoOutput(true);
 
-            Log.d(TAG, "getXML "+stringTranslate);
+            //Log.d(LOG_TAG, "getXML "+stringTranslate);
 
             DataOutputStream dataOutputStream = new DataOutputStream(httpsURLConnection.getOutputStream());
             dataOutputStream.writeBytes(stringTranslate);

@@ -5,6 +5,7 @@ package com.example.schalbyshev.yandex.core;
  */
 
 public class HistoryItem {
+
     private int id;
     private String text;
     private String translate;
@@ -13,8 +14,8 @@ public class HistoryItem {
     private int favorites;
 
     public HistoryItem(){
-
     }
+
     public HistoryItem(String text, String translate, String sourceLang, String targetLang, int favorites) {
         this.text = text;
         this.translate = translate;

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
     private ArrayList<Lang> langItemArrayList= new ArrayList<>();
 
     public LangRecyclerViewAdapter(Context context, ArrayList<Lang> langItemArrayList,Lang currentLang){
-        Log.d(LOG_TAG, "Constructor");
+        //Log.d(LOG_TAG, "Constructor");
         this.context=context;
         this.currentLang=currentLang;
         this.langItemArrayList=langItemArrayList;
@@ -38,18 +37,17 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
 
     @Override
     public ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(LOG_TAG, "onCreateViewHolder");
+        //Log.d(LOG_TAG, "onCreateViewHolder");
          view= LayoutInflater.from(context).inflate(R.layout.lang_item_list,parent, false);
         return new ItemHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ItemHolder holder, int position) {
-
         holder.tvLang.setText(langItemArrayList.get(position).getValue());
         holder.tvLang.setTag(langItemArrayList.get(position).getKey());
         if (langItemArrayList.get(position).getKey().equals(currentLang.getKey())){
-            Log.d(LOG_TAG, "onBindViewHolder "+langItemArrayList.get(position).getValue()+" "+langItemArrayList.get(position).getKey());
+            //Log.d(LOG_TAG, "onBindViewHolder "+langItemArrayList.get(position).getValue()+" "+langItemArrayList.get(position).getKey());
             holder.ivCheck.setVisibility(View.VISIBLE);
         }else {
             holder.ivCheck.setVisibility(View.INVISIBLE);
@@ -66,13 +64,10 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
 
         public ItemHolder(View itemView) {
             super(itemView);
-            Log.d(LOG_TAG, "ItemHolder Constructor");
-
+            //Log.d(LOG_TAG, "ItemHolder Constructor");
             tvLang = (TextView) itemView.findViewById(R.id.tvText);
             ivCheck = (ImageView) itemView.findViewById(R.id.ivCheck);
-
             tvLang.setOnClickListener(this);
-
         }
 
         @Override
@@ -83,7 +78,7 @@ public class LangRecyclerViewAdapter extends RecyclerView.Adapter<LangRecyclerVi
             intent.putExtra("value",stringValue);
             intent.putExtra("key",v.getTag().toString());
             ((Activity)context).setResult(RESULT_OK,intent);
-            Log.d(LOG_TAG,"onClick "+"value = "+intent.getStringExtra("value")+" key = "+intent.getStringExtra("key"));
+            //Log.d(LOG_TAG,"onClick "+"value = "+intent.getStringExtra("value")+" key = "+intent.getStringExtra("key"));
             ((Activity)context).finish();
         }
     }
