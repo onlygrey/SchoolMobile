@@ -1,0 +1,13 @@
+<resources>
+    <string name="lang">Yandex</string>
+    <string name="history">История</string>
+    <string name="favorite">Избранное</string>
+    <string name="settings">Настройки</string>
+    <string name="editText_hint">Введите текст для перевода</string>
+    <string name="someText">Текст</string>
+    <string name="tabHistory">История</string>
+    <string name="tabFavorites">Избранное</string>
+    <string name="voidHistory">Нет переводов в истории</string>
+    <string name="voidFavorites">Нет переводов в избранном</string>
+    <string name="errorNet">Ошибка соединения. Проверьте подключение к сети Интернет.</string>
+</resources>
